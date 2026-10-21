@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Address Tools — IPv4 Converter, Classifier & CIDR Calculator | Dinal Studios</title>
+<meta name="description" content="Free IPv4 toolbox: convert IPs between dotted, decimal, binary and hex, classify private/public/reserved ranges, and calculate CIDR ranges instantly.">
+<meta name="keywords" content="ip address converter, ipv4 to decimal, ip to binary, ip to hex, cidr calculator, ip address classes, private ip ranges, subnet range calculator, ip tools">
+<meta name="author" content="Dinal Studios">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://anaskhan0009.github.io/ip-address-tools/">
+<meta property="og:title" content="IP Address Tools — IPv4 Converter, Classifier & CIDR Calculator | Dinal Studios">
+<meta property="og:description" content="Free IPv4 toolbox: convert IPs between dotted, decimal, binary and hex, classify private/public/reserved ranges, and calculate CIDR ranges instantly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anaskhan0009.github.io/ip-address-tools/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IP Address Tools — IPv4 Converter, Classifier & CIDR Calculator | Dinal Studios">
+<meta name="twitter:description" content="Free IPv4 toolbox: convert IPs between dotted, decimal, binary and hex, classify private/public/reserved ranges, and calculate CIDR ranges instantly.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "IP Address Tools — IPv4 Converter, Classifier & CIDR Calculator",
+  "url": "https://anaskhan0009.github.io/ip-address-tools/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Dinal Studios"
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { margin: 0; background: #0a0f1a; color: #dbe4f3; }
+  header { background: radial-gradient(1000px 400px at 50% -80px, #14532d 0%, #0a0f1a 60%); padding: 42px 16px 28px; text-align: center; border-bottom: 1px solid #1d2b45; }
+  header h1 { margin: 0 0 8px; font-size: 31px; letter-spacing: .5px; }
+  header h1 span { color: #22c55e; }
+  header p { margin: 0; color: #93a5c4; font-size: 15px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 22px 14px 46px; }
+  .card { background: #111a2c; border: 1px solid #1f2c47; border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+  .card h2 { margin: 0 0 6px; font-size: 20px; color: #fff; }
+  .card h3 { color: #22c55e; font-size: 15.5px; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: .6px; }
+  .card .sub { color: #93a5c4; font-size: 13.5px; margin: 0 0 16px; line-height: 1.55; }
+  .card p, .card li { font-size: 14.5px; line-height: 1.65; color: #c6d2e8; }
+  .btn { background: #22c55e; color: #06280f; border: none; padding: 10px 18px; border-radius: 9px; cursor: pointer; font-weight: 700; font-size: 14px; }
+  .btn:hover { background: #16a34a; color: #fff; }
+  .btn.dark { background: #1f2c47; color: #dbe4f3; }
+  .btn.dark:hover { background: #2a3a5c; }
+  .btn.danger { background: #7f1d1d; color: #fecaca; }
+  .btn.small { padding: 6px 12px; font-size: 12.5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .tile { background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 15px; }
+  .tile b { color: #fff; display: block; margin-bottom: 5px; font-size: 14.5px; }
+  .tile span { font-size: 13px; color: #93a5c4; line-height: 1.55; display: block; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; }
+  th, td { border: 1px solid #1f2c47; padding: 9px 10px; text-align: left; vertical-align: top; }
+  th { background: #0a0f1a; color: #86efac; }
+  td { color: #c6d2e8; }
+  .bar { height: 14px; background: #22304f; border-radius: 8px; overflow: hidden; margin: 12px 0 8px; }
+  .bar i { display: block; height: 100%; width: 0%; background: #22c55e; transition: width .45s, background .45s; }
+  .scorebig { font-size: 42px; font-weight: 800; color: #fff; line-height: 1; }
+  input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select, textarea { width: 100%; background: #0a0f1a; border: 1px solid #2a3a5c; color: #fff; border-radius: 8px; padding: 10px 11px; font-size: 14px; margin: 4px 0 12px; }
+  textarea { min-height: 74px; resize: vertical; }
+  label.flabel { font-size: 13px; color: #93a5c4; font-weight: 600; }
+  .item { display: flex; gap: 12px; background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 13px 14px; margin-bottom: 9px; align-items: flex-start; }
+  .item input[type=checkbox] { width: 20px; height: 20px; accent-color: #22c55e; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .item .t { font-size: 14.5px; color: #fff; font-weight: 600; }
+  .item .d { font-size: 12.5px; color: #93a5c4; margin-top: 2px; line-height: 1.5; }
+  .item.done { border-color: #14532d; opacity: .8; }
+  .rec { background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .rec .rt { color: #fff; font-weight: 700; font-size: 15px; margin-bottom: 4px; word-break: break-word; }
+  .rec .rm { font-size: 13px; color: #93a5c4; line-height: 1.6; word-break: break-word; }
+  .rec .rm b { color: #c6d2e8; }
+  .rec .ractions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { display: inline-block; background: #1f2c47; color: #86efac; border-radius: 999px; padding: 2px 10px; font-size: 11.5px; font-weight: 700; }
+  .pill.red { background: #7f1d1d; color: #fecaca; }
+  .pill.amber { background: #713f12; color: #fde68a; }
+  .authnote { background: #0a0f1a; border: 1px dashed #2a3a5c; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #fbbf24; line-height: 1.6; margin-top: 12px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab { background: #1f2c47; color: #dbe4f3; border: none; padding: 8px 16px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 13px; }
+  .tab.on { background: #22c55e; color: #06280f; }
+  .msg { font-size: 13.5px; margin: 8px 0; min-height: 18px; }
+  .msg.err { color: #fca5a5; } .msg.ok { color: #86efac; }
+  .stepbtn { text-align: left; width: 100%; background: #0a0f1a; border: 1px solid #1f2c47; color: #dbe4f3; border-radius: 10px; padding: 13px 14px; margin-bottom: 9px; cursor: pointer; font-size: 14px; }
+  .stepbtn.on { border-color: #22c55e; }
+  .stepbtn b { color: #fff; }
+  .reveal { display: none; background: #0d1526; border: 1px solid #14532d; border-radius: 10px; padding: 13px 14px; margin: -3px 0 12px; font-size: 13.5px; line-height: 1.6; color: #c6d2e8; }
+  .optbtn { display: block; width: 100%; text-align: left; background: #0a0f1a; border: 1px solid #1f2c47; color: #dbe4f3; border-radius: 10px; padding: 11px 13px; margin-bottom: 8px; cursor: pointer; font-size: 14px; }
+  .optbtn:hover { border-color: #2a3a5c; }
+  .optbtn.right { border-color: #22c55e; background: #0d2013; }
+  .optbtn.wrong { border-color: #dc2626; background: #260d0d; }
+  .muted { color: #93a5c4; font-size: 13px; line-height: 1.6; }
+  .rowflex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  footer { text-align: center; color: #64748b; font-size: 13px; padding: 26px 14px 40px; border-top: 1px solid #1d2b45; }
+  footer a { color: #22c55e; text-decoration: none; }
+
+
+</style>
+</head>
+<body>
+<header>
+  <h1>IP Address <span>Tools</span></h1>
+  <p>Convert IPv4 addresses between every format, see what class an address really is, and map CIDR ranges — in one place.</p>
+</header>
+<div class="wrap">
+  <div class="card">
+    <h2>👤 Your account</h2>
+    <div id="dsAuthArea"></div>
+  </div>
+
+  <div class="card">
+    <h2>🔁 IPv4 Format Converter</h2>
+    <p class="sub">Type an IPv4 address in any format — dotted decimal (192.168.1.1), a plain decimal number (3232235777), hex (0xC0A80101) or 32-bit binary — and see it in every format at once.</p>
+    <label class="flabel">IP address (any format)</label>
+    <input type="text" id="ipInput" placeholder="e.g. 192.168.1.1 or 3232235777 or 0xC0A80101">
+    <div class="rowflex">
+      <button class="btn" onclick="ipConvert()">Convert</button>
+      <button class="btn dark" onclick="ipFill('192.168.1.1')">Try 192.168.1.1</button>
+      <button class="btn dark" onclick="ipFill('8.8.8.8')">Try 8.8.8.8</button>
+      <button class="btn dark" onclick="ipFill('3232235777')">Try decimal</button>
+    </div>
+    <div class="msg" id="ipMsg"></div>
+    <div id="ipOut"></div>
+  </div>
+  <div class="card">
+    <h2>🧭 What kind of address is it?</h2>
+    <p class="sub">Not all IPv4 addresses can appear on the public internet. The converter reports the class of every address you enter:</p>
+    <div class="grid">
+      <div class="tile"><b>Private (RFC 1918)</b><span>10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16 — homes, offices and cloud networks. Never routed on the internet.</span></div>
+      <div class="tile"><b>Loopback</b><span>127.0.0.0/8 — the device talking to itself. 127.0.0.1 is “localhost”.</span></div>
+      <div class="tile"><b>Link-local</b><span>169.254.0.0/16 — auto-assigned when DHCP fails. Seeing one usually means a network problem.</span></div>
+      <div class="tile"><b>CGNAT</b><span>100.64.0.0/10 — shared by ISPs between their network and your router (carrier-grade NAT).</span></div>
+      <div class="tile"><b>Multicast &amp; reserved</b><span>224.0.0.0/4 is multicast (group delivery); 240.0.0.0/4 is reserved for future use and includes the 255.255.255.255 broadcast.</span></div>
+      <div class="tile"><b>Documentation</b><span>192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24 — reserved for examples in books and docs, like the ones on this page.</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🧮 CIDR Range Calculator</h2>
+    <p class="sub">Enter any IP inside a network plus a prefix length to get the whole block: network address, broadcast, usable range and host count.</p>
+    <div class="grid">
+      <div><label class="flabel">IP address</label><input type="text" id="cidrIp" placeholder="e.g. 192.168.1.10"></div>
+      <div><label class="flabel">Prefix length (0–32)</label><input type="number" id="cidrPrefix" min="0" max="32" value="24"></div>
+    </div>
+    <button class="btn" onclick="cidrRun()">Calculate range</button>
+    <div class="msg" id="cidrMsg"></div>
+    <div id="cidrOut"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗂 My Saved Conversions</h2>
+    <p class="sub">Conversions and lookups you saved with the button above, plus anything you add by hand. Records live under your local account (or guest space) on this device — create, view, edit and delete them any time.</p>
+    <div id="dsRecordForm"></div>
+    <div id="dsRecordList" style="margin-top:18px;"></div>
+  </div>
+</div>
+<section style="max-width:880px;margin:34px auto 0;padding:20px 14px 6px;text-align:center;">
+  <h2 style="font-size:1rem;margin:0 0 10px;color:#94a3b8;">More free tools by Dinal Studios</h2>
+  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;">
+      <li><a href="https://anaskhan0009.github.io/subnet-calculator-tool/">Subnet Calculator & CIDR Tool</a></li>
+      <li><a href="https://anaskhan0009.github.io/common-ports-reference/">Common Ports Reference</a></li>
+      <li><a href="https://anaskhan0009.github.io/linux-security-commands-guide/">Linux Security Commands Guide</a></li>
+      <li><a href="https://anaskhan0009.github.io/base64-encoder-decoder-tool/">Base64 Encoder & Decoder</a></li>
+      <li><a href="https://anaskhan0009.github.io/cyber-security-toolkit/">Free Cyber Security Toolkit</a></li>
+      <li><a href="https://anaskhan0009.github.io/uuid-generator-tool/">UUID Generator Tool</a></li>
+  </ul>
+</section>
+<footer>Built by <a href="https://github.com/anaskhan0009">Dinal Studios</a> · Free cyber security tools &amp; web apps · Everything runs locally in your browser — no data is sent anywhere.</footer>
+<script>
+var DS_APP_ID = "ip-address-tools";
+var DS_RECORD_CONFIG = {"nounSingular": "conversion", "nounPlural": "conversions", "titleField": "label", "fields": [{"key": "label", "label": "Label", "type": "text", "required": true, "placeholder": "e.g. Home router LAN"}, {"key": "input", "label": "Original input", "type": "text", "placeholder": "e.g. 192.168.1.1"}, {"key": "result", "label": "Result summary", "type": "text", "placeholder": "e.g. Decimal 3232235777 · Private (RFC 1918)"}, {"key": "notes", "label": "Notes", "type": "textarea", "placeholder": "What is this address for?"}]};
+</script>
+<script>
+/* ==CORE-START== */
+function ds_sha256(text){
+  var enc = new TextEncoder().encode(text);
+  return crypto.subtle.digest("SHA-256", enc).then(function(buf){
+    return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ("00" + b.toString(16)).slice(-2); }).join("");
+  });
+}
+function ds_randomHex(bytes){
+  var a = new Uint8Array(bytes); crypto.getRandomValues(a);
+  return Array.prototype.map.call(a, function(b){ return ("00" + b.toString(16)).slice(-2); }).join("");
+}
+function ds_storeGet(key, fallback){
+  try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){ return fallback; }
+}
+function ds_storeSet(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+var DSAuth = {
+  usersKey: function(){ return "ds_users_" + DS_APP_ID; },
+  sessionKey: function(){ return "ds_session_" + DS_APP_ID; },
+  users: function(){ return ds_storeGet(this.usersKey(), []); },
+  saveUsers: function(u){ ds_storeSet(this.usersKey(), u); },
+  publicUser: function(u){ return { id: u.id, name: u.name, email: u.email, createdAt: u.createdAt }; },
+  signup: function(name, email, password){
+    name = (name || "").trim(); email = (email || "").trim().toLowerCase();
+    if(!name) return Promise.reject(new Error("Please enter your name."));
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return Promise.reject(new Error("Please enter a valid email address."));
+    if(!password || password.length < 6) return Promise.reject(new Error("Password must be at least 6 characters."));
+    var users = this.users(), i;
+    for(i = 0; i < users.length; i++){ if(users[i].email === email) return Promise.reject(new Error("An account with this email already exists on this device.")); }
+    var salt = ds_randomHex(16), self = this;
+    return ds_sha256(salt + ":" + password).then(function(hash){
+      var user = { id: "u_" + ds_randomHex(8), name: name, email: email, salt: salt, hash: hash, createdAt: new Date().toISOString() };
+      users.push(user); self.saveUsers(users); self.setSession(user.id);
+      return self.publicUser(user);
+    });
+  },
+  login: function(email, password){
+    email = (email || "").trim().toLowerCase();
+    var users = this.users(), user = null, i;
+    for(i = 0; i < users.length; i++){ if(users[i].email === email) user = users[i]; }
+    if(!user) return Promise.reject(new Error("No account found for that email on this device."));
+    var self = this;
+    return ds_sha256(user.salt + ":" + (password || "")).then(function(hash){
+      if(hash !== user.hash) throw new Error("Incorrect password.");
+      self.setSession(user.id); return self.publicUser(user);
+    });
+  },
+  continueAsGuest: function(){ this.setSession("guest"); },
+  logout: function(){ localStorage.removeItem(this.sessionKey()); },
+  setSession: function(id){ ds_storeSet(this.sessionKey(), { userId: id, at: new Date().toISOString() }); },
+  session: function(){ return ds_storeGet(this.sessionKey(), null); },
+  currentUser: function(){
+    var s = this.session(); if(!s || !s.userId || s.userId === "guest") return null;
+    var users = this.users(), i;
+    for(i = 0; i < users.length; i++){ if(users[i].id === s.userId) return this.publicUser(users[i]); }
+    return null;
+  },
+  isGuest: function(){ var s = this.session(); return !s || s.userId === "guest"; },
+  bucketId: function(){ var u = this.currentUser(); return u ? u.id : "guest"; },
+  deleteAccount: function(){
+    var u = this.currentUser(); if(!u) return false;
+    var users = this.users().filter(function(x){ return x.id !== u.id; });
+    this.saveUsers(users);
+    localStorage.removeItem(DSRecords.keyFor(u.id));
+    this.logout(); return true;
+  }
+};
+
+var DSRecords = {
+  keyFor: function(bucket){ return "ds_records_" + DS_APP_ID + "_" + bucket; },
+  key: function(){ return this.keyFor(DSAuth.bucketId()); },
+  list: function(){ return ds_storeGet(this.key(), []); },
+  save: function(rows){ ds_storeSet(this.key(), rows); },
+  create: function(data){
+    var rows = this.list();
+    var rec = { id: "r_" + ds_randomHex(8), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+    for(var k in data) rec[k] = data[k];
+    rows.unshift(rec); this.save(rows); return rec;
+  },
+  get: function(id){
+    var rows = this.list();
+    for(var i = 0; i < rows.length; i++) if(rows[i].id === id) return rows[i];
+    return null;
+  },
+  update: function(id, data){
+    var rows = this.list(), i, k;
+    for(i = 0; i < rows.length; i++){
+      if(rows[i].id === id){
+        for(k in data) rows[i][k] = data[k];
+        rows[i].updatedAt = new Date().toISOString(); this.save(rows); return rows[i];
+      }
+    }
+    return null;
+  },
+  remove: function(id){ this.save(this.list().filter(function(r){ return r.id !== id; })); },
+  exportJSON: function(){ return JSON.stringify(this.list(), null, 2); },
+  importJSON: function(text){
+    var parsed = JSON.parse(text);
+    if(!Array.isArray(parsed)) throw new Error("Import file must be a JSON array of records.");
+    var rows = this.list(), added = 0;
+    parsed.forEach(function(r){
+      if(r && typeof r === "object"){
+        if(!r.id) r.id = "r_" + ds_randomHex(8);
+        if(!r.createdAt) r.createdAt = new Date().toISOString();
+        r.updatedAt = new Date().toISOString();
+        rows.push(r); added++;
+      }
+    });
+    this.save(rows); return added;
+  }
+};
+/* ==CORE-END== */
+</script>
+<script>
+/* ==UI-START== */
+var DS_EDITING_ID = null;
+function dsEl(id){ return document.getElementById(id); }
+function dsEsc(s){ return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+function dsRenderAuth(){
+  var area = dsEl("dsAuthArea"); if(!area) return;
+  var user = DSAuth.currentUser(), sess = DSAuth.session();
+  var note = '<div class="authnote">🔒 <b>Local account</b> — your data stays on this device only. This is not a cloud account; use a unique password you don\'t use elsewhere.</div>';
+  if(user){
+    area.innerHTML =
+      '<div class="rowflex" style="justify-content:space-between;">' +
+        '<div><b style="color:#fff;font-size:16px;">👤 ' + dsEsc(user.name) + '</b><div class="muted">' + dsEsc(user.email) + ' · Local account on this device</div></div>' +
+        '<div class="rowflex"><button class="btn dark small" onclick="dsScrollSettings()">Profile &amp; settings</button>' +
+        '<button class="btn dark small" onclick="dsDoLogout()">Log out</button></div>' +
+      '</div>' + note +
+      '<div id="dsSettings" style="display:none;margin-top:16px;border-top:1px solid #1f2c47;padding-top:14px;">' +
+        '<h3 style="margin-top:0;">Profile &amp; settings</h3>' +
+        '<p class="muted">Account created: ' + dsEsc((user.createdAt || "").slice(0, 10)) + ' · Records are stored per account on this device.</p>' +
+        '<div class="rowflex">' +
+          '<button class="btn dark small" onclick="dsExportRecords()">⬇ Export my records (JSON)</button>' +
+          '<label class="btn dark small" style="cursor:pointer;">⬆ Import records (JSON)<input type="file" accept=".json,application/json" style="display:none;" onchange="dsImportRecords(this)"></label>' +
+          '<button class="btn danger small" onclick="dsDeleteAccount()">Delete my account</button>' +
+        '</div><div class="msg" id="dsSettingsMsg"></div>' +
+      '</div>';
+  } else if(sess && sess.userId === "guest"){
+    area.innerHTML =
+      '<div class="rowflex" style="justify-content:space-between;">' +
+        '<div><b style="color:#fff;font-size:16px;">👀 Browsing as guest</b><div class="muted">The tool works fully. Anything you save is kept in a guest space on this device only.</div></div>' +
+        '<button class="btn dark small" onclick="dsShowAuthForms()">Log in / Sign up</button>' +
+      '</div><div id="dsAuthForms" style="display:none;">' + dsAuthFormsHTML() + '</div>' + note;
+  } else {
+    area.innerHTML = '<p class="sub" style="margin-bottom:4px;">Create a free local account to save your records, plans and progress on this device — or just continue as a guest.</p>' + dsAuthFormsHTML() + note;
+  }
+}
+function dsAuthFormsHTML(){
+  return '<div class="tabs"><button class="tab on" id="dsTabSignup" onclick="dsAuthTab(\'signup\')">Sign up</button>' +
+    '<button class="tab" id="dsTabLogin" onclick="dsAuthTab(\'login\')">Log in</button></div>' +
+    '<div id="dsSignupForm">' +
+      '<label class="flabel">Name</label><input type="text" id="dsSuName" placeholder="Your name" autocomplete="name">' +
+      '<label class="flabel">Email</label><input type="email" id="dsSuEmail" placeholder="you@example.com" autocomplete="email">' +
+      '<label class="flabel">Password (min. 6 characters)</label><input type="password" id="dsSuPass" placeholder="A unique password for this app" autocomplete="new-password">' +
+      '<button class="btn" onclick="dsDoSignup()">Create local account</button>' +
+    '</div>' +
+    '<div id="dsLoginForm" style="display:none;">' +
+      '<label class="flabel">Email</label><input type="email" id="dsLiEmail" placeholder="you@example.com" autocomplete="email">' +
+      '<label class="flabel">Password</label><input type="password" id="dsLiPass" placeholder="Your password" autocomplete="current-password">' +
+      '<button class="btn" onclick="dsDoLogin()">Log in</button>' +
+    '</div>' +
+    '<div class="msg" id="dsAuthMsg"></div>' +
+    '<button class="btn dark" onclick="dsDoGuest()">Continue as guest →</button>';
+}
+function dsShowAuthForms(){ var f = dsEl("dsAuthForms"); if(f) f.style.display = "block"; }
+function dsScrollSettings(){ var s = dsEl("dsSettings"); if(s){ s.style.display = "block"; s.scrollIntoView({ behavior: "smooth", block: "center" }); } }
+function dsAuthTab(which){
+  dsEl("dsSignupForm").style.display = which === "signup" ? "block" : "none";
+  dsEl("dsLoginForm").style.display = which === "login" ? "block" : "none";
+  dsEl("dsTabSignup").className = "tab" + (which === "signup" ? " on" : "");
+  dsEl("dsTabLogin").className = "tab" + (which === "login" ? " on" : "");
+}
+function dsAuthError(e){ var m = dsEl("dsAuthMsg"); if(m){ m.className = "msg err"; m.textContent = (e && e.message) || String(e); } }
+function dsDoSignup(){
+  DSAuth.signup(dsEl("dsSuName").value, dsEl("dsSuEmail").value, dsEl("dsSuPass").value)
+    .then(function(){ DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords(); })
+    .catch(dsAuthError);
+}
+function dsDoLogin(){
+  DSAuth.login(dsEl("dsLiEmail").value, dsEl("dsLiPass").value)
+    .then(function(){ DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords(); })
+    .catch(dsAuthError);
+}
+function dsDoGuest(){ DSAuth.continueAsGuest(); dsRenderAuth(); dsRenderRecords(); }
+function dsDoLogout(){ DSAuth.logout(); DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords(); }
+function dsDeleteAccount(){
+  if(!confirm("Delete your local account and ALL its saved records from this device? This cannot be undone.")) return;
+  DSAuth.deleteAccount(); DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords();
+}
+function dsExportRecords(){
+  var blob = new Blob([DSRecords.exportJSON()], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = DS_APP_ID + "-records.json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  var m = dsEl("dsSettingsMsg"); if(m){ m.className = "msg ok"; m.textContent = "Records exported as JSON."; }
+}
+function dsImportRecords(input){
+  var file = input.files && input.files[0]; if(!file) return;
+  var reader = new FileReader(), m = dsEl("dsSettingsMsg");
+  reader.onload = function(){
+    try {
+      var n = DSRecords.importJSON(String(reader.result));
+      if(m){ m.className = "msg ok"; m.textContent = "Imported " + n + " record(s)."; }
+      dsRenderRecords();
+    } catch(e){ if(m){ m.className = "msg err"; m.textContent = "Import failed: " + e.message; } }
+  };
+  reader.readAsText(file); input.value = "";
+}
+
+function dsFieldInput(f, val){
+  var v = val == null ? "" : val, req = f.required ? " required" : "";
+  if(f.type === "textarea") return '<textarea id="dsF_' + f.key + '" placeholder="' + dsEsc(f.placeholder || "") + '"' + req + '>' + dsEsc(v) + '</textarea>';
+  if(f.type === "select"){
+    var out = '<select id="dsF_' + f.key + '">';
+    (f.options || []).forEach(function(o){ out += '<option value="' + dsEsc(o) + '"' + (String(v) === String(o) ? " selected" : "") + '>' + dsEsc(o) + '</option>'; });
+    return out + '</select>';
+  }
+  return '<input type="' + f.type + '" id="dsF_' + f.key + '" value="' + dsEsc(v) + '" placeholder="' + dsEsc(f.placeholder || "") + '"' + req + '>';
+}
+function dsRenderRecordForm(){
+  var host = dsEl("dsRecordForm"); if(!host) return;
+  var cfg = DS_RECORD_CONFIG, rec = DS_EDITING_ID ? DSRecords.get(DS_EDITING_ID) : null;
+  var html = '<h3 style="margin-top:0;">' + (rec ? "Edit" : "Add") + " " + dsEsc(cfg.nounSingular) + '</h3>';
+  cfg.fields.forEach(function(f){
+    html += '<label class="flabel">' + dsEsc(f.label) + (f.hint ? ' <span style="color:#64748b;">— ' + dsEsc(f.hint) + '</span>' : "") + '</label>' + dsFieldInput(f, rec ? rec[f.key] : (f.def || ""));
+  });
+  html += '<div class="rowflex"><button class="btn" onclick="dsSaveRecord()">' + (rec ? "Save changes" : "Add " + dsEsc(cfg.nounSingular)) + '</button>';
+  if(rec) html += '<button class="btn dark" onclick="dsCancelEdit()">Cancel</button>';
+  html += '</div><div class="msg" id="dsRecMsg"></div>';
+  host.innerHTML = html;
+}
+function dsSaveRecord(){
+  var cfg = DS_RECORD_CONFIG, data = {}, ok = true;
+  cfg.fields.forEach(function(f){
+    var el = dsEl("dsF_" + f.key); var v = el ? el.value.trim() : "";
+    if(f.required && !v) ok = false;
+    data[f.key] = f.type === "number" ? (v === "" ? "" : Number(v)) : v;
+  });
+  var m = dsEl("dsRecMsg");
+  if(!ok){ if(m){ m.className = "msg err"; m.textContent = "Please fill in the required fields."; } return; }
+  if(DS_EDITING_ID) DSRecords.update(DS_EDITING_ID, data); else DSRecords.create(data);
+  DS_EDITING_ID = null; dsRenderRecordForm(); dsRenderRecordList();
+}
+function dsEditRecord(id){ DS_EDITING_ID = id; dsRenderRecordForm(); dsEl("dsRecordForm").scrollIntoView({ behavior: "smooth", block: "center" }); }
+function dsCancelEdit(){ DS_EDITING_ID = null; dsRenderRecordForm(); }
+function dsDeleteRecord(id){
+  if(!confirm("Delete this record? This cannot be undone.")) return;
+  if(DS_EDITING_ID === id) DS_EDITING_ID = null;
+  DSRecords.remove(id); dsRenderRecordForm(); dsRenderRecordList();
+}
+function dsPillClass(v){
+  var s = String(v || "").toLowerCase();
+  if(/done|in place|looks fine|valid|safe|low/.test(s)) return "pill";
+  if(/avoid|high|error|no https|blocked|scam/.test(s)) return "pill red";
+  if(/caution|progress|started|review|medium|partial/.test(s)) return "pill amber";
+  return "pill";
+}
+function dsRenderRecordList(){
+  var host = dsEl("dsRecordList"); if(!host) return;
+  var cfg = DS_RECORD_CONFIG, rows = DSRecords.list();
+  var html = "";
+  if(cfg.progressField){
+    var done = rows.filter(function(r){ return r[cfg.progressField] === cfg.progressDoneValue; }).length;
+    var pct = rows.length ? Math.round(done / rows.length * 100) : 0;
+    html += '<p class="muted" style="margin-top:0;">Progress: <b style="color:#fff;">' + done + " / " + rows.length + '</b> done (' + pct + '%)</p><div class="bar"><i style="width:' + pct + '%;"></i></div>';
+  }
+  if(!rows.length){
+    html += '<p class="muted">No ' + dsEsc(cfg.nounPlural) + ' saved yet. Add your first one with the form — it stays saved under your account on this device.</p>';
+  }
+  rows.forEach(function(r){
+    html += '<div class="rec"><div class="rt">' + dsEsc(r[cfg.titleField] || "(untitled)") + '</div><div class="rm">';
+    cfg.fields.forEach(function(f){
+      if(f.key === cfg.titleField) return;
+      var v = r[f.key]; if(v === "" || v == null) return;
+      if(f.type === "select") html += '<span class="' + dsPillClass(v) + '">' + dsEsc(v) + '</span> ';
+      else html += '<b>' + dsEsc(f.label) + ':</b> ' + dsEsc(v) + "<br>";
+    });
+    html += '<br><span style="color:#64748b;">Saved ' + dsEsc((r.createdAt || "").slice(0, 10)) + (r.updatedAt && r.updatedAt !== r.createdAt ? " · edited " + dsEsc(r.updatedAt.slice(0, 10)) : "") + '</span></div>';
+    html += '<div class="ractions"><button class="btn dark small" onclick="dsEditRecord(\'' + r.id + '\')">✏️ Edit</button>' +
+            '<button class="btn danger small" onclick="dsDeleteRecord(\'' + r.id + '\')">🗑 Delete</button></div></div>';
+  });
+  host.innerHTML = html;
+}
+function dsRenderRecords(){ dsRenderRecordForm(); dsRenderRecordList(); }
+document.addEventListener("DOMContentLoaded", function(){ dsRenderAuth(); dsRenderRecords(); if(window.DS_TOOL_INIT) DS_TOOL_INIT(); });
+/* ==UI-END== */
+</script>
+<script>
+
+function ipToInt(o){ return (((o[0] * 256 + o[1]) * 256 + o[2]) * 256 + o[3]); }
+function intToIp(n){
+  n = Math.floor(n);
+  return [Math.floor(n / 16777216) % 256, Math.floor(n / 65536) % 256, Math.floor(n / 256) % 256, n % 256];
+}
+function ipOctetsToBin(o){ return o.map(function(x){ return ("0000000" + x.toString(2)).slice(-8); }).join(" "); }
+function ipOctetsToHex(o){ return "0x" + o.map(function(x){ return ("0" + x.toString(16).toUpperCase()).slice(-2); }).join(""); }
+function parseIpInput(text){
+  text = String(text || "").trim();
+  if(!text) return null;
+  var n = null, m;
+  if(/^\d{1,3}(\.\d{1,3}){3}$/.test(text)){
+    var parts = text.split(".").map(function(x){ return parseInt(x, 10); });
+    for(var i = 0; i < 4; i++){ if(parts[i] > 255) return null; }
+    return parts;
+  }
+  if(/^0x[0-9a-fA-F]{1,8}$/.test(text)){ n = parseInt(text.slice(2), 16); }
+  else if(/^[01]{32}$/.test(text.replace(/\s/g, ""))){ n = parseInt(text.replace(/\s/g, ""), 2); }
+  else if(/^\d{1,10}$/.test(text)){ n = parseInt(text, 10); }
+  else if((m = text.match(/^([0-9a-fA-F]{8})$/))){ n = parseInt(m[1], 16); }
+  if(n === null || isNaN(n) || n < 0 || n > 4294967295) return null;
+  return intToIp(n);
+}
+function classifyIp(o){
+  var a = o[0], b = o[1];
+  if(a === 0) return { cls: "Reserved — “this network”", detail: "0.0.0.0/8 is reserved; 0.0.0.0 itself means “unspecified”." };
+  if(a === 10) return { cls: "Private (RFC 1918)", detail: "10.0.0.0/8 — used inside organisations and cloud networks; never routed on the public internet." };
+  if(a === 172 && b >= 16 && b <= 31) return { cls: "Private (RFC 1918)", detail: "172.16.0.0/12 — private range common in corporate and cloud networks." };
+  if(a === 192 && b === 168) return { cls: "Private (RFC 1918)", detail: "192.168.0.0/16 — the classic home and small-office router range." };
+  if(a === 127) return { cls: "Loopback", detail: "127.0.0.0/8 — traffic to the device itself (localhost)." };
+  if(a === 169 && b === 254) return { cls: "Link-local (APIPA)", detail: "169.254.0.0/16 — auto-assigned when no DHCP server answers; usually a sign of a network fault." };
+  if(a === 100 && b >= 64 && b <= 127) return { cls: "CGNAT shared space", detail: "100.64.0.0/10 — carrier-grade NAT space used by ISPs; not globally routable." };
+  if(a === 192 && b === 0 && o[2] === 2) return { cls: "Documentation (TEST-NET-1)", detail: "192.0.2.0/24 — reserved for examples and documentation." };
+  if(a === 198 && b === 51 && o[2] === 100) return { cls: "Documentation (TEST-NET-2)", detail: "198.51.100.0/24 — reserved for examples and documentation." };
+  if(a === 203 && b === 0 && o[2] === 113) return { cls: "Documentation (TEST-NET-3)", detail: "203.0.113.0/24 — reserved for examples and documentation." };
+  if(a === 192 && b === 88 && o[2] === 99) return { cls: "Reserved (6to4 relay)", detail: "192.88.99.0/24 — former 6to4 relay anycast, now reserved." };
+  if(a >= 224 && a <= 239) return { cls: "Multicast", detail: "224.0.0.0/4 — one-to-many group delivery (streaming, discovery protocols)." };
+  if(a >= 240) return { cls: "Reserved / broadcast", detail: "240.0.0.0/4 — reserved for future use; 255.255.255.255 is the limited broadcast address." };
+  if(a === 198 && (b === 18 || b === 19)) return { cls: "Benchmarking", detail: "198.18.0.0/15 — reserved for network benchmarking tests." };
+  return { cls: "Public", detail: "A globally routable address — this is the kind of address servers and websites use on the internet." };
+}
+function cidrInfo(o, prefix){
+  prefix = Math.max(0, Math.min(32, Math.floor(prefix)));
+  var total = Math.pow(2, 32 - prefix);
+  var n = ipToInt(o);
+  var network = Math.floor(n / total) * total;
+  var broadcast = network + total - 1;
+  var usable = total >= 4 ? total - 2 : (total === 2 ? 0 : 1);
+  var first = total >= 2 ? network + 1 : network;
+  var last = total >= 2 ? broadcast - 1 : broadcast;
+  if(total === 1){ first = network; last = network; }
+  var maskOctets = intToIp(4294967296 - total);
+  var wildOctets = intToIp(total - 1);
+  return {
+    prefix: prefix, total: total, usable: usable,
+    network: intToIp(network).join("."), broadcast: intToIp(broadcast).join("."),
+    first: intToIp(first).join("."), last: intToIp(last).join("."),
+    mask: maskOctets.join("."), wildcard: wildOctets.join(".")
+  };
+}
+var LAST_IP_RESULT = null;
+function ipFill(v){ dsEl("ipInput").value = v; ipConvert(); }
+function ipConvert(){
+  var msg = dsEl("ipMsg"), out = dsEl("ipOut");
+  var o = parseIpInput(dsEl("ipInput").value);
+  if(!o){ msg.className = "msg err"; msg.textContent = "That doesn't parse as an IPv4 address. Try dotted decimal (203.0.113.7), a decimal number, 0x hex, or 32 ones and zeros."; out.innerHTML = ""; LAST_IP_RESULT = null; return; }
+  msg.className = "msg ok"; msg.textContent = "";
+  var n = ipToInt(o), c = classifyIp(o);
+  LAST_IP_RESULT = { dotted: o.join("."), dec: n, cls: c.cls };
+  var rows = [
+    ["Dotted decimal", o.join(".")],
+    ["Decimal (32-bit integer)", String(n)],
+    ["Hexadecimal", ipOctetsToHex(o)],
+    ["Binary", ipOctetsToBin(o)],
+    ["Classification", c.cls]
+  ];
+  var html = '<table>' + rows.map(function(r){ return '<tr><th style="width:34%;">' + r[0] + '</th><td style="font-family:Consolas,monospace;">' + r[1] + '</td></tr>'; }).join("") + '</table>';
+  html += '<p class="muted">' + dsEsc(c.detail) + '</p>';
+  html += '<table><tr><th>Octet</th><th>Decimal</th><th>Binary</th><th>Hex</th></tr>' + o.map(function(x, i){
+    return '<tr><td>' + (i + 1) + '</td><td>' + x + '</td><td style="font-family:Consolas,monospace;">' + ("0000000" + x.toString(2)).slice(-8) + '</td><td>0x' + ("0" + x.toString(16).toUpperCase()).slice(-2) + '</td></tr>';
+  }).join("") + '</table>';
+  html += '<button class="btn" onclick="ipSave()">💾 Save this conversion</button>';
+  out.innerHTML = html;
+}
+function ipSave(){
+  if(!LAST_IP_RESULT){ return; }
+  DSRecords.create({ label: LAST_IP_RESULT.dotted, input: String(dsEl("ipInput").value), result: "Decimal " + LAST_IP_RESULT.dec + " · " + LAST_IP_RESULT.cls, notes: "" });
+  dsRenderRecordList();
+  alert("Saved to your records below.");
+}
+function cidrRun(){
+  var msg = dsEl("cidrMsg"), out = dsEl("cidrOut");
+  var o = parseIpInput(dsEl("cidrIp").value);
+  var p = parseInt(dsEl("cidrPrefix").value, 10);
+  if(!o || o.join(".") !== String(dsEl("cidrIp").value).trim()){ msg.className = "msg err"; msg.textContent = "Enter a dotted-decimal IP for the CIDR calculator, e.g. 192.168.1.10."; out.innerHTML = ""; return; }
+  if(isNaN(p) || p < 0 || p > 32){ msg.className = "msg err"; msg.textContent = "Prefix must be between 0 and 32."; out.innerHTML = ""; return; }
+  msg.className = "msg"; msg.textContent = "";
+  var r = cidrInfo(o, p);
+  var rows = [
+    ["Network address", r.network + " /" + r.prefix],
+    ["Broadcast address", r.broadcast],
+    ["First usable host", r.first],
+    ["Last usable host", r.last],
+    ["Total addresses", r.total.toLocaleString("en-US")],
+    ["Usable hosts", r.usable.toLocaleString("en-US")],
+    ["Subnet mask", r.mask],
+    ["Wildcard mask", r.wildcard]
+  ];
+  out.innerHTML = '<table>' + rows.map(function(x){ return '<tr><th style="width:34%;">' + x[0] + '</th><td style="font-family:Consolas,monospace;">' + x[1] + '</td></tr>'; }).join("") + '</table>' +
+    '<p class="muted">For /31 links the two addresses are both usable point-to-point; for a /32 the single address is the host itself.</p>';
+}
+
+</script>
+</body>
+</html>
